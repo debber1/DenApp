@@ -28,6 +28,12 @@ namespace PDA_DePaddel.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            if (Variables.Renew3 == true)
+            {
+                RootPage.NavigateFromMenu(0);
+                Variables.Renew3 = false;
+                MessagingCenter.Send(this, "OpenMenu");
+            }
         }
     }
 }

@@ -26,7 +26,15 @@ namespace PDA_DePaddel.Views
         public BestellingenLijst()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<OrdersListVM>(this, "SwitchTabDetail", (sender) =>
+            {
+                this.CurrentPage = this.DetailTab;
+            });
 
+            MessagingCenter.Subscribe<OrdersListVM>(this, "SwitchTabMain", (sender) =>
+            {
+                this.CurrentPage = this.MainTab;
+            });
 
         }
 

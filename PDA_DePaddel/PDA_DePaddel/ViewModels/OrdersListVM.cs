@@ -40,6 +40,7 @@ namespace PDA_DePaddel.ViewModels
                 NotifyPropertyChanged(nameof(Orders));
                 IsBusy = false;
                 NotifyPropertyChanged(nameof(IsBusy));
+                MessagingCenter.Send(this, "SwitchTabMain");
             });            
             //Command for the refresh
             RefreshCommand = new Command(async () =>
@@ -99,6 +100,7 @@ namespace PDA_DePaddel.ViewModels
 
                     IsBusy = false;
                     NotifyPropertyChanged(nameof(IsBusy));
+                    MessagingCenter.Send(this, "SwitchTabDetail");
                     value = null;
                 }
                 selectedOrder = value;
