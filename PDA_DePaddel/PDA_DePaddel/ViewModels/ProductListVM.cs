@@ -23,10 +23,19 @@ namespace PDA_DePaddel.ViewModels
         public ProductListVM()
         {
             Products = Services.ServerService.GetProduct();
+            if(Products == null)
+            {
+                MessagingCenter.Send(this, "ErrorProductList", "Er ging iets mis bij het ophalen van de producten.");
+            }
             TotalPrice = 0;
             IsBusy = false;
             Name = Variables.Name;
             OrderNumber = Services.ServerService.GetOrderNumber();
+            if(OrderNumber == -1)
+            {
+                MessagingCenter.Send(this, "ErrorProductList", "Er ging iets mis bij het ophalen van het bestellingnummer.");
+                Products = null;
+            }
             LastName = "Laatst gekozen item";
             LastAmount = "Hoeveelheid";
             ProductOrder = new ObservableCollection<ProductOrder>();

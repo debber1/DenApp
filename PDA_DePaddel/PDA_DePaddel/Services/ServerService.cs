@@ -51,6 +51,7 @@ namespace PDA_DePaddel.Services
                 {
 
                     Variables.OrderNumber = OrderNumber;
+                    return OrderNumber;
                 }
                 else
                 {
@@ -65,7 +66,7 @@ namespace PDA_DePaddel.Services
             {
                 Debug.WriteLine("Regular Ex: " + ex);
             }
-            return OrderNumber;
+            return -1;
         }
         public static ObservableCollection<Grouping<string, Product>> GetProduct()
         {
@@ -87,7 +88,7 @@ namespace PDA_DePaddel.Services
                              group drank by drank.Type into drankgroup
                              select new Grouping<string, Product>(drankgroup.Key, drankgroup);
                 Products = new ObservableCollection<Grouping<string, Product>>(sorted);
-
+                return Products;
             }
             catch (WebException ex)
             {
@@ -98,7 +99,7 @@ namespace PDA_DePaddel.Services
             {
                 Debug.WriteLine("Fout", "General: " + ex.Message, "oké");
             }
-            return Products;
+            return null;
         }
         public static List<Token> GetToken()
         {
