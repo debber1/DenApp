@@ -26,7 +26,15 @@ namespace PDA_DePaddel.ViewModels
             Name = Variables.EventName;
             IsBusy = false;
             Orders = Services.ServerService.GetOrders();
-            Fixcolor();
+            if(Orders == null)
+            {
+                MessagingCenter.Send(this, "ErrorOrdersList", "Er ging iets mis bij het laden van de bestellingen.");
+            }
+            else
+            {
+                Fixcolor();
+            }
+
             OrderDetail = new ObservableCollection<OrderDet>();
 
             //Command for the done button
@@ -36,11 +44,19 @@ namespace PDA_DePaddel.ViewModels
                 NotifyPropertyChanged(nameof(IsBusy));
                 Guid currentbestelling = OrderDetail[0].ID_Order_Head;
                 Orders = Services.ServerService.BarCompletion(currentbestelling);
-                Fixcolor();
+                if (Orders == null)
+                {
+                    MessagingCenter.Send(this, "ErrorOrdersList", "Er ging iets mis bij het doorgeven.");
+                }
+                else
+                {
+                    Fixcolor();
+                    MessagingCenter.Send(this, "SwitchTabMain");
+                }
                 NotifyPropertyChanged(nameof(Orders));
                 IsBusy = false;
                 NotifyPropertyChanged(nameof(IsBusy));
-                MessagingCenter.Send(this, "SwitchTabMain");
+
             });            
             //Command for the refresh
             RefreshCommand = new Command(async () =>
@@ -64,17 +80,25 @@ namespace PDA_DePaddel.ViewModels
                         NotifyPropertyChanged(nameof(IsBusy));
 
                         Orders = Services.ServerService.GetOrders();
-                        Fixcolor();
+                        if (Orders == null)
+                        {
+                            MessagingCenter.Send(this, "ErrorOrdersList", "Er ging iets mis bij het laden van de bestellingen.");
+                        }
+                        else
+                        {
+                            Fixcolor();
+                        }
                         NotifyPropertyChanged(nameof(Orders));
 
                         IsBusy = false;
                         NotifyPropertyChanged(nameof(IsBusy));
-                        await Task.Delay(10000);
+                        
                     }
                     catch (Exception ex)
                     {
                         Debug.WriteLine("Regular Ex: " + ex);
                     }
+                    await Task.Delay(10000);
                 }
             });
         }
@@ -92,9 +116,16 @@ namespace PDA_DePaddel.ViewModels
                     NotifyPropertyChanged(nameof(IsBusy));
 
                     OrderDetail = Services.ServerService.GetDetail(value.ID);
-                    Orders = Services.ServerService.GetOrders();
                     Idtaped = value.ID;
-                    Fixcolor();
+                    Orders = Services.ServerService.GetOrders();
+                    if (Orders == null)
+                    {
+                        MessagingCenter.Send(this, "ErrorOrdersList", "Er ging iets mis bij het laden van de bestellingen.");
+                    }
+                    else
+                    {
+                        Fixcolor();
+                    }
                     NotifyPropertyChanged(nameof(OrderDetail));
                     NotifyPropertyChanged(nameof(Orders));
 
