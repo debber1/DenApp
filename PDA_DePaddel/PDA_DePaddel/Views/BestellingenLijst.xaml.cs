@@ -29,11 +29,17 @@ namespace PDA_DePaddel.Views
             MessagingCenter.Subscribe<OrdersListVM>(this, "SwitchTabDetail", (sender) =>
             {
                 this.CurrentPage = this.DetailTab;
+                
             });
 
             MessagingCenter.Subscribe<OrdersListVM>(this, "SwitchTabMain", (sender) =>
             {
                 this.CurrentPage = this.MainTab;
+                DisplayAlert("Info", "Succesvol doorgegeven.", "OK");
+            });
+            MessagingCenter.Subscribe<OrdersListVM, String>(this, "ErrorOrdersList", (sender, args) =>
+            {
+                DisplayAlert("Error", "Something went wrong: " + args, "OK");
             });
 
         }

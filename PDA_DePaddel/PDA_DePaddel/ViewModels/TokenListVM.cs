@@ -27,6 +27,10 @@ namespace PDA_DePaddel.ViewModels
         {
             //Inladen van de drankkaarten in het begin.
             Tokens = ServerService.GetToken();
+            if(Tokens == null)
+            {
+                MessagingCenter.Send(this, "ErrorTokenList", "Fout bij het ophalen van de drankkaarten");
+            }
             Name = Variables.EventName;
             LastName = "Laatst gekozen item";
             LastAmount = "Hoeveelheid";

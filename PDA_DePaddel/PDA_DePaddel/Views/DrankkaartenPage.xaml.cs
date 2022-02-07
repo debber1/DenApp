@@ -1,4 +1,5 @@
 ﻿using PDA_DePaddel.Models;
+using PDA_DePaddel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -21,7 +22,11 @@ namespace PDA_DePaddel.Views
 
         public DrankkaartenPage()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            MessagingCenter.Subscribe<TokenListVM, String>(this, "ErrorTokenList", (sender, args) =>
+            {
+                DisplayAlert("Error", "Something went wrong: " + args, "OK");
+            });
         }
         protected override void OnAppearing()
         {

@@ -27,6 +27,10 @@ namespace PDA_DePaddel.Views
         public DrankkaartLijst()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<TokenListVM,String>(this, "ErrorTokenList", (sender,args) =>
+            {
+                DisplayAlert("Error", "Something went wrong: " + args, "OK");
+            });
         }
 
         protected override void OnAppearing()

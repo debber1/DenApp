@@ -13,6 +13,7 @@ using Xamarin.Forms.Xaml;
 using ZXing.Net.Mobile.Forms;
 using System.Collections.ObjectModel;
 using PDA_DePaddel.ViewModels;
+using PDA_DePaddel.Services;
 
 namespace PDA_DePaddel.Views
 {
@@ -30,7 +31,10 @@ namespace PDA_DePaddel.Views
         {
             InitializeComponent();
             BindingContext = new HomePageVM(Navigation);
-            
+            MessagingCenter.Subscribe<HomePageVM, String>(this, "ErrorHomePage", (sender, args) =>
+            {
+                DisplayAlert("Error", "Something went wrong: " + args, "OK");
+            });
         }
 
         protected override void OnAppearing()

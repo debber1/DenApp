@@ -47,6 +47,7 @@ namespace PDA_DePaddel.ViewModels
                 if (HomeScreens == null)
                 {
                     Debug.WriteLine("fout", "Dit operator nummer bestaat niet!", "OK");
+                    MessagingCenter.Send(this, "ErrorHomePage", "Dit operator nummer bestaat niet!");
                 }
                 else
                 {
@@ -69,7 +70,15 @@ namespace PDA_DePaddel.ViewModels
                     LoginPageVisable = false;
                     HomePageVisable = true;
                     Orders = Services.ServerService.GetOrderNotDone();
-                    fixcolor();
+                    if (Orders == null)
+                    {
+                        MessagingCenter.Send(this, "ErrorHomePage", "Fout bij het herladen van de bestellingen.");
+                    }
+                    else
+                    {
+                        fixcolor();
+                        Variables.OrderNotDone = Orders;
+                    }
                     NotifyPropertyChanged(nameof(Name));
                     NotifyPropertyChanged(nameof(LastName));
                     NotifyPropertyChanged(nameof(EventName));
@@ -138,8 +147,15 @@ namespace PDA_DePaddel.ViewModels
                                 IsBusy = true;
                                 NotifyPropertyChanged(nameof(IsBusy));
                                 Orders = Services.ServerService.GetOrderNotDone();
-                                Variables.OrderNotDone = Orders;
-                                fixcolor();
+                                if (Orders == null)
+                                {
+                                    MessagingCenter.Send(this, "ErrorHomePage", "Fout bij het herladen van de bestellingen.");
+                                }
+                                else
+                                {
+                                    fixcolor();
+                                    Variables.OrderNotDone = Orders;
+                                }
                                 NotifyPropertyChanged(nameof(Orders));
                                 IsBusy = false;
                                 NotifyPropertyChanged(nameof(IsBusy));

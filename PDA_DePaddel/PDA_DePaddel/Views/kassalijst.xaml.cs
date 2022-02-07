@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PDA_DePaddel.Models;
+using PDA_DePaddel.ViewModels;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,10 @@ namespace PDA_DePaddel.Views
         public kassalijst()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<RegisterListVM, String>(this, "ErrorRegisterList", (sender, args) =>
+            {
+                DisplayAlert("Error", "Something went wrong: " + args, "OK");
+            });
         }
         
     }

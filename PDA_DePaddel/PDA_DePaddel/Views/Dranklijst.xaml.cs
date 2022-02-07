@@ -29,6 +29,10 @@ namespace PDA_DePaddel.Views
         public Dranklijst()
         {
             InitializeComponent();
+            MessagingCenter.Subscribe<ProductListVM, String>(this, "ErrorProductList", (sender, args) =>
+            {
+                DisplayAlert("Error", "Something went wrong: " + args, "OK");
+            });
         }
     }
 }
