@@ -1,4 +1,4 @@
-		# DenApp
+# DenApp
 This is a project by debber1. It started out as a small app for a local sports club, but quickly grew to be my biggest project to date. 
 
 # A few things to note:
