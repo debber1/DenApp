@@ -114,6 +114,7 @@ namespace PDA_DePaddel.Services
 
                 string json = Encoding.UTF8.GetString(response);
                 Tokens = JsonConvert.DeserializeObject<List<Token>>(json);
+                return Tokens;
 
             }
             catch (WebException ex)
@@ -124,7 +125,7 @@ namespace PDA_DePaddel.Services
             {
                 Debug.WriteLine("Regular Ex: " + ex);
             }
-            return Tokens;
+            return null;
 
         }
         public static void ProductDone()
