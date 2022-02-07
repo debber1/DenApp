@@ -240,7 +240,7 @@ namespace PDA_DePaddel.Services
             {
                 Debug.WriteLine("Regular Ex: " + ex);
             }
-            return new ObservableCollection<OrderHead>();
+            return null;
         }
         public static void LoadExistingOrder(Guid Idtaped)
         {
