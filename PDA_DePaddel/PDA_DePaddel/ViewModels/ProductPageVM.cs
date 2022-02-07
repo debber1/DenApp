@@ -24,7 +24,14 @@ namespace PDA_DePaddel.ViewModels
             if(Variables.Renew3 != true)
             {
                 Orders = Services.ServerService.GetOrderNotDone();
-                fixcolor();
+                if(Orders != null)
+                {
+                    fixcolor();
+                }
+                else
+                {
+                    MessagingCenter.Send(this, "ErrorProductPage", "Er ging iets mis bij het ophalen van de bestellingen.");
+                }
             }
             else
             {
@@ -49,6 +56,7 @@ namespace PDA_DePaddel.ViewModels
                     if(Services.ServerService.LoadNewOrder() == "0")
                     {
                         Debug.WriteLine("fout", "Dit operator nummer bestaat niet!", "OK");
+                        MessagingCenter.Send(this, "ErrorProductPage", "Dit operator nummer bestaat niet!");
                     }
                     else
                     {
@@ -108,6 +116,7 @@ namespace PDA_DePaddel.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine("exception: " + ex);
+                MessagingCenter.Send(this, "ErrorProductPage", "Er ging iets mis bij het ophalen van de bestelling.");
             }
         }
 

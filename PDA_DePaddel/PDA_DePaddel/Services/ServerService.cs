@@ -225,6 +225,7 @@ namespace PDA_DePaddel.Services
                         Debug.WriteLine("Fout", "Er ging iets mis.", "oké");
                         break;
                     case "1":
+                        return new ObservableCollection<OrderHead>();
                         break;
                     default:
                         Orders = JsonConvert.DeserializeObject<ObservableCollection<OrderHead>>(output);

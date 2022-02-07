@@ -24,6 +24,10 @@ namespace PDA_DePaddel.Views
         {
             InitializeComponent();
             BindingContext = new ProductPageVM(Navigation);
+            MessagingCenter.Subscribe<ProductPageVM, String>(this, "ErrorProductPage", (sender, args) =>
+            {
+                DisplayAlert("Error", "Something went wrong: " + args, "OK");
+            });
         }
         protected override void OnAppearing()
         {

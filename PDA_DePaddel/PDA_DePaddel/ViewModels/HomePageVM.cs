@@ -70,7 +70,15 @@ namespace PDA_DePaddel.ViewModels
                     LoginPageVisable = false;
                     HomePageVisable = true;
                     Orders = Services.ServerService.GetOrderNotDone();
-                    fixcolor();
+                    if (Orders == null)
+                    {
+                        MessagingCenter.Send(this, "ErrorHomePage", "Fout bij het herladen van de bestellingen.");
+                    }
+                    else
+                    {
+                        fixcolor();
+                        Variables.OrderNotDone = Orders;
+                    }
                     NotifyPropertyChanged(nameof(Name));
                     NotifyPropertyChanged(nameof(LastName));
                     NotifyPropertyChanged(nameof(EventName));
@@ -145,8 +153,8 @@ namespace PDA_DePaddel.ViewModels
                                 }
                                 else
                                 {
-                                    Variables.OrderNotDone = Orders;
                                     fixcolor();
+                                    Variables.OrderNotDone = Orders;
                                 }
                                 NotifyPropertyChanged(nameof(Orders));
                                 IsBusy = false;
