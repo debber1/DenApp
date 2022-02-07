@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:PDA_DePaddel.ViewModels"
+             mc:Ignorable="d"
+             x:Class="PDA_DePaddel.Views.DrankkaartFinal">
+    <ContentPage.BindingContext>
+        <local:TokenFinalVM/>
+    </ContentPage.BindingContext>
+
+
+    <Grid Padding="20" ColumnSpacing="10" RowSpacing="10">
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ActivityIndicator 
+        Color="#2196F3"
+        x:Name="Activity1"
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Fill"
+                Grid.ColumnSpan="4"/>
+        <Label x:Name="lblGebruiker"  Text="{Binding User}" Grid.ColumnSpan="4" Grid.Row="0"/>
+
+        <ListView x:Name="Currentbestelling" Grid.Row="1" Grid.ColumnSpan="4" HasUnevenRows="true" ItemsSource ="{Binding TokenOrder}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+
+                            <Grid  ColumnSpacing="5" RowSpacing="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding ID}" IsVisible="False"/>
+                                <Label Text="{Binding Price}" FontSize="Large" Grid.ColumnSpan="3" Grid.Row="0"/>
+                                <Label Text="{Binding Amount}" FontSize="Large" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="End"/>
+                                <Label Text="{Binding Comment}" Grid.ColumnSpan="4" Grid.Row="1"/>
+                            </Grid>
+
+
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label x:Name="Onbelangerijk" Text="Totaalprijs:" Grid.Row="2" Grid.ColumnSpan="2" />
+        <Label x:Name="lblTotaal" Text="{Binding TotalPrice}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalTextAlignment="End"/>
+
+        <Button x:Name="btnAfgewerkt" Text="Bestelling afgeleverd" Command="{Binding DoneCommand}" Grid.ColumnSpan="4"  Grid.Row="3"/>
+    </Grid>
+</ContentPage>

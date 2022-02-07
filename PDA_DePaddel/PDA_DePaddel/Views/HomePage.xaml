@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PDA_DePaddel.Views.HomePage"
+             xmlns:local="clr-namespace:PDA_DePaddel.ViewModels">
+    <!--<ContentPage.BindingContext>
+        <local:HomePageVM/>
+    </ContentPage.BindingContext>-->
+
+
+    <!--<Grid Padding="20" ColumnSpacing="10" RowSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ActivityIndicator 
+        Color="#2196F3"
+        x:Name="Activity1"
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Fill"
+                Grid.ColumnSpan="3"/>
+        <Image x:Name="loginIcon" Source="@drawable/depaddelicon" Margin="0,80,0,0" Grid.ColumnSpan="3" Grid.Row="0"/>
+        
+        Dit is deel van de legacy code die werd gebruikt om operators aan te vragen
+        
+        <Entry x:Name="Entry_voornaam" Placeholder="Voornaam" Grid.Row="1" Grid.ColumnSpan="3"/>
+        <Entry x:Name="Entry_naam" Placeholder="Naam" Grid.Row="2" Grid.ColumnSpan="3"/>
+        <Entry x:Name="Entry_Operator" Placeholder="Kies een operator nummer" Keyboard="Telephone" Grid.ColumnSpan="2" Grid.Row="3"/>
+        <Button x:Name="Button_ok" Text="Oke"  Clicked="Button_ok_Clicked" Grid.Row="3" Grid.Column="2" />
+    </Grid>-->
+
+    <Grid Padding="20" ColumnSpacing="10"  RowSpacing="20" BackgroundColor="Gainsboro">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ActivityIndicator IsRunning="{Binding Isbusy}"
+        Color="#2196F3"
+        x:Name="Activity"
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Fill"/>
+
+        <!--  Label to display the title of this page  -->
+        <Label
+                       x:Name="lblaanmelden"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Aanmelden"
+                        TextColor="black" 
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        FontAttributes="Bold"
+                        IsVisible="{Binding LoginPageVisable}"/>
+        <Label x:Name="lblinfo"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Margin="0,8"
+                        FontFamily=""
+                        HorizontalTextAlignment="Center"
+                        Text="HI"
+                        TextColor="black" 
+                FontAttributes="Italic,Bold"
+               IsVisible="{Binding LoginPageVisable}"/>
+        <Entry
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        x:Name="txtevent"
+                        Text="{Binding txtEvent}"
+                        IsPassword="false"
+                        Placeholder="evenement nummer"
+                        Keyboard="Telephone"
+                        TextColor="black"
+                PlaceholderColor="black"
+                 IsVisible="{Binding LoginPageVisable}"       />
+        <Entry
+                        Grid.Row="4"
+                        Grid.ColumnSpan="2"
+                        x:Name="txtOperator"
+                        Text="{Binding txtOperator}"
+                        IsPassword="false"
+                        Placeholder="Operator nummer"
+                        Keyboard="Telephone"
+                        TextColor="black"
+                PlaceholderColor="black"
+                   IsVisible="{Binding LoginPageVisable}"     />
+
+        <Button x:Name="btnQR" 
+                    Text="scanner"
+                    Command="{Binding QRCommand}"
+                    TextColor="black"
+                    BackgroundColor="#2196F3"
+                    BorderColor="#2175f3"
+                    BorderWidth="1"
+                    Grid.Row="6"
+                    Grid.ColumnSpan="2"
+                IsVisible="{Binding LoginPageVisable}"/>
+
+        <Button x:Name="btnOK" 
+                    Text="Aanmelden"
+                    Command="{Binding OKCommand}"
+                    TextColor="black"
+                    BackgroundColor="#2196F3"
+                    BorderColor="#2175f3"
+                    BorderWidth="1"
+                    Grid.Row="5"
+                    Grid.ColumnSpan="2"
+                IsVisible="{Binding LoginPageVisable}"/>
+        <!--  Label to display the description of this page  -->
+
+        <!--  Label to display the description of this page  -->
+        <Label
+                       x:Name="lblHome"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        Text="Homescreen"
+                        TextColor="black" 
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        FontAttributes="Bold"
+            IsVisible="{Binding HomePageVisable}"/>
+        <Label
+                       x:Name="lbleventnaam"
+                        FontSize="Default"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding EventName}"
+                        TextColor="black" 
+                        Grid.Row="1"
+                        Grid.ColumnSpan="1"
+            IsVisible="{Binding HomePageVisable}"/>
+        <Label
+                       x:Name="lbleventid"
+                        FontSize="Default"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding EventID}"
+                        TextColor="black" 
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="1"
+            IsVisible="{Binding HomePageVisable}"/>
+        <ListView x:Name="openbestellingview" Grid.Row="2" Grid.RowSpan="3" Grid.ColumnSpan="2" HasUnevenRows="True" IsVisible="{Binding HomePageVisable}" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder, Mode=TwoWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <Grid ColumnSpacing="10" RowSpacing="5" BackgroundColor="{Binding BGColour}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding ID}" IsVisible="False"/>
+                                <Label Text="{Binding OrderNumber}" FontSize="Large"/>
+                                <Label Text="{Binding Creation}" FontSize="Large" Grid.ColumnSpan="2" Grid.Column="1" HorizontalTextAlignment="End"/>
+                                <Label Text="{Binding Comment}" Grid.Row="1"/>
+                            </Grid>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label
+                       x:Name="lblvnaam"
+                        FontSize="Default"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Name}"
+                        TextColor="black" 
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="1"
+            IsVisible="{Binding HomePageVisable}"/>
+        <Label
+                       x:Name="lblanaam"
+                        FontSize="Default"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding LastName}"
+                        TextColor="black" 
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="1"
+            IsVisible="{Binding HomePageVisable}"/>
+        <Label
+                       x:Name="lblnews"
+                        FontSize="Default"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding EventNews}"
+                        TextColor="black" 
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+            IsVisible="{Binding HomePageVisable}"/>
+        <Button x:Name="btnlogoff" 
+                    Text="log off"
+                    Command="{Binding LogOffCommand}"
+                    TextColor="black"
+                    BackgroundColor="#2196F3"
+                    BorderColor="#2175f3"
+                    BorderWidth="1"
+                    Grid.Row="7"
+                    Grid.ColumnSpan="2"
+                IsVisible="{Binding HomePageVisable}"/>
+
+    </Grid>
+
+</ContentPage>
+    

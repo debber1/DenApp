@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PDA_DePaddel.Views.MenuPage"
+             Title="Menu">
+    
+    
+             
+    <StackLayout VerticalOptions="FillAndExpand">
+        
+        <Image x:Name="image" Aspect="Fill" />
+        <StackLayout HeightRequest="75">
+                     
+            <Label x:Name="Label_gebruiker"
+                 FontSize="20"
+                 VerticalOptions="CenterAndExpand"
+                 TextColor="Black"
+                 HorizontalOptions="Center"/>
+        </StackLayout>
+        
+        
+        
+        <ListView x:Name="ListViewMenu"
+                     RowHeight="50"
+                  
+                  SeparatorVisibility="None"
+                    HasUnevenRows="False">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout VerticalOptions="FillAndExpand"
+                             Orientation="Horizontal"
+                             Padding="20,10,0,10"
+                             Spacing="20">
+
+                            <Image Source="{Binding Icon}"
+                         WidthRequest="40"
+                         HeightRequest="40"
+                         VerticalOptions="Center" />
+
+                            <Label Text="{Binding Title}"
+                         FontSize="Medium"
+                         VerticalOptions="Center"
+                         TextColor="Black"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

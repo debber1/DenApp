@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="Prijs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/txtprijs"
+        android:textStyle="bold"
+        android:paddingBottom="2dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp"
+        android:textSize="22sp" />
+         <TextView
+        android:text="comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/txtcomment"
+        android:paddingBottom="2dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="2dp" />
+
+</LinearLayout>

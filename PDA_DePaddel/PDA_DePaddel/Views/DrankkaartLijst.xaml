@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                     xmlns:android1="http://xamarin.com/schemas/2014/forms/design"
+                 xmlns:xaml="http://xamarin.com/schemas/2014/forms" 
+        android:TabbedPage.OffscreenPageLimit="2"
+        android:TabbedPage.IsSwipePagingEnabled="true"
+        android:TabbedPage.IsSmoothScrollEnabled="false"
+        xmlns:local="clr-namespace:PDA_DePaddel.ViewModels"
+            x:Class="PDA_DePaddel.Views.DrankkaartLijst">
+    <TabbedPage.BindingContext>
+        <local:TokenListVM/>
+    </TabbedPage.BindingContext>
+
+    <ContentPage Title="Main">
+        <Grid Padding="20" ColumnSpacing="10" RowSpacing="10">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+        Color="#2196F3"
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Fill"
+                Grid.ColumnSpan="4"/>
+
+            <Label Text="{Binding Name}" Grid.ColumnSpan="4" Grid.Row="0"/>
+
+
+            <ListView x:Name="DrankkaartView" Grid.Row="1" Grid.ColumnSpan="4" HasUnevenRows="True" ItemsSource="{Binding Tokens}" SelectedItem="{Binding SelectedToken, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Spacing="5">
+                                    <Label Text="{Binding ID}" IsVisible="false"/>
+                                    <Label Text="{Binding Price}" FontSize="Large"/>
+                                    <Label Text="{Binding Comment}" />
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label x:Name="lblLaatstnaam" Text="{Binding LastName}" Grid.Row="2" Grid.ColumnSpan="3" TextColor="Black" />
+            <Label x:Name="lblLaatstHoeveelheid" Text="{Binding LastAmount}" Grid.Row="2" Grid.Column="3" TextColor="Black" HorizontalTextAlignment="End"/>
+
+            <Button Text="Annuleer" Command="{Binding AbortCommand}" Grid.Column="0" Grid.ColumnSpan="2"  Grid.Row="3"/>
+            <Button Text="Bestel" Command="{Binding OrderCommand}" Grid.Column="2" Grid.ColumnSpan="2"  Grid.Row="3"/>
+        </Grid>
+    </ContentPage>
+    <ContentPage Title="Bestelling">
+        <Grid Padding="20" ColumnSpacing="10" RowSpacing="10">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+        Color="#2196F3"
+        VerticalOptions="CenterAndExpand"
+        HorizontalOptions="Fill"
+                Grid.ColumnSpan="4"/>
+            
+            <Label Text="{Binding Name}" Grid.ColumnSpan="4" Grid.Row="0"/>
+
+            <ListView x:Name="Currentbestelling" Grid.Row="1" Grid.ColumnSpan="4" HasUnevenRows="true" ItemsSource="{Binding TokenOrder}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <!--<ViewCell.ContextActions>
+                                <MenuItem Clicked="MenuItem_Clicked" CommandParameter="{Binding .}" Text="Verwijderen" IsDestructive="true"/>
+                                <MenuItem Clicked="MenuItem_Clicked_1" CommandParameter="{Binding .}" Text="1 X Verwijderen" IsDestructive="true"/>
+                            </ViewCell.ContextActions>-->
+                            <ViewCell.View>
+                                
+                                <Grid  ColumnSpacing="5" RowSpacing="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding ID}" IsVisible="False"/>
+                                    <Label Text="{Binding Price}" FontSize="Large" Grid.ColumnSpan="3" Grid.Row="0"/>
+                                    <Label Text="{Binding Amount}" FontSize="Large" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="End"/>
+                                    <Label Text="{Binding Comment}" Grid.ColumnSpan="4" Grid.Row="1"/>
+                                </Grid>
+                                
+                                
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label x:Name="Onbelangerijk" Text="Totaalprijs:" Grid.Row="2" Grid.ColumnSpan="2"/>
+            <Label x:Name="lblTotaal" Text="{Binding TotalPrice}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" HorizontalTextAlignment="End"/>
+            <Button Text="Annuleer" Command="{Binding AbortCommand}" Grid.Column="0" Grid.ColumnSpan="2"  Grid.Row="3"/>
+            <Button Text="Bestel" Command="{Binding OrderCommand}" Grid.Column="2" Grid.ColumnSpan="2"  Grid.Row="3"/>
+        </Grid>
+    </ContentPage>
+</TabbedPage> 

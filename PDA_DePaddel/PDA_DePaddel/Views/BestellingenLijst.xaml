@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PDA_DePaddel.Views.BestellingenLijst"
+            xmlns:local="clr-namespace:PDA_DePaddel.ViewModels">
+
+    <TabbedPage.BindingContext>
+        <local:OrdersListVM/>
+    </TabbedPage.BindingContext>
+    <ContentPage Title="Main" x:Name="MainTab">
+        <Grid Padding="20" ColumnSpacing="10" RowSpacing="10">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                Color="#2196F3"
+                x:Name="Activity1"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Fill"
+                Grid.ColumnSpan="4"/>
+            
+            <Label x:Name="lblGebruiker"  Text="{Binding Name}" Grid.ColumnSpan="4" Grid.Row="0"/>
+
+
+            <ListView x:Name="BestellingenView" Grid.Row="1" Grid.ColumnSpan="4" HasUnevenRows="True"
+                      IsPullToRefreshEnabled="true" 
+                      RefreshCommand="{Binding RefreshCommand}"
+                      IsRefreshing="{Binding IsRefreshing}"
+                      ItemsSource="{Binding Orders}"
+                      SelectedItem="{Binding SelectedOrder, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid ColumnSpacing="10" RowSpacing="5" BackgroundColor="{Binding BGColour}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding ID}" IsVisible="False"/>
+                                    <Label Text="{Binding OrderNumber}" FontSize="Large" Grid.Column="2"  HorizontalTextAlignment="End"/>
+                                    <Label Text="{Binding Creation}" Grid.ColumnSpan="3" Grid.Row="1"/>
+                                    <Label Text="{Binding User}" Grid.ColumnSpan="2" FontSize="Large"/>
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
+    </ContentPage>
+    <ContentPage Title="Bestellingdetail" x:Name="DetailTab">
+        <Grid Padding="20" ColumnSpacing="10" RowSpacing="10">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                Color="#2196F3"
+                x:Name="Activity2"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Fill"
+                Grid.ColumnSpan="4"/>
+            <Label x:Name="lblGebruiker2"  Text="{Binding Name}" Grid.ColumnSpan="4" Grid.Row="0"/>
+
+            <ListView x:Name="bestellingdetail" Grid.Row="1" Grid.ColumnSpan="4" HasUnevenRows="true" ItemsSource="{Binding OrderDetail}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <ViewCell.View>
+
+                                <Grid  ColumnSpacing="5" RowSpacing="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding ID}" IsVisible="False"/>
+                                    <Label Text="{Binding ID_Order_Head}" IsVisible="false"/>
+                                    <Label Text="{Binding Product}" FontSize="Large" Grid.ColumnSpan="3" Grid.Row="0"/>
+                                    <Label Text="{Binding Amount}" FontSize="Large" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="End"/>
+                                </Grid>
+
+
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <Button x:Name="btnAfgewerkt" Text="afgewerkt" Command="{Binding DoneCommand}"  Grid.ColumnSpan="4"  Grid.Row="3"/>
+        </Grid>
+    </ContentPage>
+</TabbedPage>
