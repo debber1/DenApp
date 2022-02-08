@@ -92,7 +92,7 @@
                 Grid.ColumnSpan="4"/>
             <Label  Text="{Binding Name}" Grid.ColumnSpan="4" Grid.Row="0"/>
             <Label  Text="{Binding OrderNumber}" Grid.ColumnSpan="1" Grid.Column="3" HorizontalTextAlignment="End" Grid.Row="0"/>
-            <ListView x:Name="Currentbestelling" Grid.Row="1" Grid.ColumnSpan="4" HasUnevenRows="true" ItemsSource="{Binding ProductOrder}">
+            <ListView x:Name="CurrentOrder" Grid.Row="1" Grid.ColumnSpan="4" HasUnevenRows="true" ItemsSource="{Binding ProductOrders}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -102,7 +102,7 @@
                             </ViewCell.ContextActions>-->
                             <ViewCell.View>
 
-                                <Grid  ColumnSpacing="5" RowSpacing="5">
+                                <Grid  ColumnSpacing="5" RowSpacing="5" x:Name="Item">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
@@ -113,12 +113,16 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Text="{Binding ID}" IsVisible="False"/>
                                     <Label Text="{Binding Name}" FontSize="Large" Grid.ColumnSpan="3" Grid.Row="0"/>
-                                    <Label Text="{Binding Amount}" FontSize="Large" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="End"/>
+                                    <Label Text="{Binding Amount}" FontSize="39" Grid.Column="5" Grid.Row="0" Grid.RowSpan="2" HorizontalTextAlignment="Center"/>
                                     <Label Text="{Binding Comment}" Grid.ColumnSpan="3" Grid.Row="1"/>
                                     <Label Text="{Binding Price}" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="End"/>
+                                    <Button Grid.Column="4" Grid.Row="0" Grid.RowSpan="2" BindingContext="{Binding Source={x:Reference CurrentOrder}, Path=BindingContext}"   Command="{Binding DeleteCommand}"   CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" Text="-"></Button>
+                                    <Button Grid.Column="6" Grid.Row="0" Grid.RowSpan="2" BindingContext="{Binding Source={x:Reference CurrentOrder}, Path=BindingContext}" Command="{Binding AddCommand}"  CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" Text="+"></Button>
                                 </Grid>
 
 
