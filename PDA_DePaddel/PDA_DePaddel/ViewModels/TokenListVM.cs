@@ -51,7 +51,55 @@ namespace PDA_DePaddel.ViewModels
             {
                 await PopupNavigation.Instance.PushAsync(new AnnulerenPopup());
             });
-            
+
+            DeleteCommand = new Command((e) =>
+            {
+                var item = (e as TokenOrder);
+                int index = TokenOrder.IndexOf(item);
+                if (TokenOrder[index].Amount == 1)
+                {
+                    TokenOrder.Remove(item);
+                }
+                else
+                {
+                    TokenOrder[index].Amount--;
+                    TokenOrder[index].OnPropertyChanged("Amount");
+                    LastName = TokenOrder[index].Price.ToString();
+                    LastAmount = TokenOrder[index].Amount.ToString();
+                }
+
+                TotalPrice = 0;
+                foreach (TokenOrder element in TokenOrder)
+                {
+                    TotalPrice = TotalPrice + element.Price * element.Amount;
+                }
+                NotifyPropertyChanged(nameof(LastAmount));
+                NotifyPropertyChanged(nameof(LastName));
+                NotifyPropertyChanged(nameof(TotalPrice));
+                NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(TokenOrder));
+
+            });
+            AddCommand = new Command((e) =>
+            {
+                var item = e as TokenOrder;
+                int index = TokenOrder.IndexOf(item);
+                TokenOrder[index].Amount++;
+                LastName = TokenOrder[index].Price.ToString();
+                LastAmount = TokenOrder[index].Amount.ToString();
+                TotalPrice = 0;
+                foreach (TokenOrder element in TokenOrder)
+                {
+                    TotalPrice = TotalPrice + element.Price * element.Amount;
+                }
+                NotifyPropertyChanged(nameof(LastAmount));
+                NotifyPropertyChanged(nameof(LastName));
+                NotifyPropertyChanged(nameof(TotalPrice));
+                NotifyPropertyChanged(nameof(TokenOrder));
+                NotifyPropertyChanged();
+                TokenOrder[index].OnPropertyChanged("Amount");
+            });
+
         }
 
         //Logic for when a Token gets tapped by the user.
@@ -168,5 +216,7 @@ namespace PDA_DePaddel.ViewModels
 
         public Command OrderCommand { get; }
         public Command AbortCommand { get; }
+        public Command AddCommand { get; }
+        public Command DeleteCommand { get; }
     }
 }
