@@ -15,6 +15,7 @@ namespace PDA_DePaddel.Models
         public int Done_Table { get; set; }
         public int Register { get; set; }
         public string Comment { get; set; }
+        public int Rev { get; set; }
         public Color BGColour { get; set; }
 
     }

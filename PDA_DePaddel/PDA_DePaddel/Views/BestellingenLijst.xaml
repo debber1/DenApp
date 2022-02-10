@@ -60,6 +60,7 @@
                                     <Label Text="{Binding OrderNumber}" FontSize="Large" Grid.Column="2"  HorizontalTextAlignment="End"/>
                                     <Label Text="{Binding Creation}" Grid.ColumnSpan="3" Grid.Row="1"/>
                                     <Label Text="{Binding User}" Grid.ColumnSpan="2" FontSize="Large"/>
+                                    <Label Text="{Binding Rev}" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="end" FontSize="Medium"/>
                                 </Grid>
                             </ViewCell.View>
                         </ViewCell>
