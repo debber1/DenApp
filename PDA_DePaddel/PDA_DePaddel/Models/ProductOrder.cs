@@ -19,5 +19,6 @@ namespace PDA_DePaddel.Models
         public decimal Price { get; set; }
         public int Amount { get; set; }
         public string Comment { get; set; }
+        public string DisplayAmount { get; set; }
     }
 }

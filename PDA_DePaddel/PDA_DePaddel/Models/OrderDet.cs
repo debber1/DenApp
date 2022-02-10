@@ -10,5 +10,6 @@ namespace PDA_DePaddel.Models
         public Guid ID_Order_Head { get; set; }
         public string Product { get; set; }
         public int Amount { get; set; }
+        public string DisplayAmount { get; set; }
     }
 }

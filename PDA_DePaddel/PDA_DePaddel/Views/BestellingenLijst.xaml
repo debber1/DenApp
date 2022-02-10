@@ -114,7 +114,7 @@
                                     <Label Text="{Binding ID}" IsVisible="False"/>
                                     <Label Text="{Binding ID_Order_Head}" IsVisible="false"/>
                                     <Label Text="{Binding Product}" FontSize="Large" Grid.ColumnSpan="3" Grid.Row="0"/>
-                                    <Label Text="{Binding Amount}" FontSize="Large" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="End"/>
+                                    <Label Text="{Binding DisplayAmount}" FontSize="Large" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="End"/>
                                 </Grid>
 
 
