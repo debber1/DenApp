@@ -150,6 +150,17 @@ namespace PDA_DePaddel.Models
             get { return sCalcOrderRev; }
             set { sCalcOrderRev = value; }
         }
-
+        private static int sRev = -1;
+        public static int Rev
+        {
+            get { return sRev; }
+            set { sRev = value; }
+        }
+        private static string sRevCurrentGuid;
+        public static string RevCurrentGuid
+        {
+            get { return sRevCurrentGuid; }
+            set { sRevCurrentGuid = value; }
+        }
     }
 }

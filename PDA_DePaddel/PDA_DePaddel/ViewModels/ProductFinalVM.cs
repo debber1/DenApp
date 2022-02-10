@@ -24,7 +24,7 @@ namespace PDA_DePaddel.ViewModels
             TotalPrice = Variables.TotalPrice;
             OrderNumber = Variables.OrderNumber;
             OrderProducts = Variables.ProductOrder;
-            if (Variables.CalcOrderRev != null)
+            if (Variables.CalcOrderRev != null && Variables.CalcOrderRev != Variables.ProductOrder)
             {
                 foreach (ProductOrder element in OrderProducts)
                 {

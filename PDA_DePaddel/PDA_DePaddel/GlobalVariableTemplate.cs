@@ -23,5 +23,6 @@ namespace PDA_DePaddel
         public static string UpLoadRegister = "";
         public static string UpLoadOrder = "";
         public static string UpLoadToken = "";
+        public static string UploadRevision = "";
     }
 }

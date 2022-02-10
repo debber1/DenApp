@@ -69,6 +69,25 @@ namespace PDA_DePaddel.ViewModels
                     Debug.WriteLine("exception: " + ex);
                 }
             });
+            //Command for the new order button
+            EditCommand = new Command( (e) =>
+            {
+                var item = (e as OrderHead);
+                try
+                {
+                    Services.ServerService.LoadExistingOrder(item.ID);
+                    Variables.RevCurrentGuid = item.ID.ToString();
+                    Variables.OrderNumber = item.OrderNumber;
+                    Variables.Rev = item.Rev;
+                    Navigation.PushAsync(new Dranklijst(), true);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("exception: " + ex);
+                    MessagingCenter.Send(this, "ErrorProductPage", "Er ging iets mis bij het ophalen van de bestelling.");
+                }
+
+            });
             Task.Run(async () =>
             {
                 while (true)
@@ -85,6 +104,7 @@ namespace PDA_DePaddel.ViewModels
 
 
         public Command NewOrderCommand { get; }
+        public Command EditCommand { get; }
 
         OrderHead selectedOrder;
         public OrderHead SelectedOrder

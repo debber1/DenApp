@@ -26,13 +26,13 @@
         <Label x:Name="lblop" Grid.Row="0" Text="Bestelling"/>
         <Label x:Name="lblbestelling" Grid.Row="1" Text="Open een nieuwe bestelling, of kies uit een openstaande!"/>
 
-        <ListView x:Name="openbestellingview" Grid.Row="3" HasUnevenRows="True" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder, Mode=TwoWay}">
+        <ListView x:Name="OpenOrder" Grid.Row="3" HasUnevenRows="True" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder, Mode=TwoWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <ViewCell.View>
 
-                            <Grid ColumnSpacing="10" RowSpacing="5" BackgroundColor="{Binding BGColour}">
+                            <Grid ColumnSpacing="10" RowSpacing="5" BackgroundColor="{Binding BGColour}" x:Name="Item">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
@@ -41,12 +41,14 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding ID}" IsVisible="False"/>
                                 <Label Text="{Binding OrderNumber}" FontSize="Large"/>
                                 <Label Text="{Binding Creation}" FontSize="Large" Grid.ColumnSpan="2" Grid.Column="1" HorizontalTextAlignment="End"/>
                                 <Label Text="{Binding Comment}" Grid.Row="1"/>
-                                <Label Text="{Binding DisplayAmount}" FontSize="Large" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="End"/>
+                                <Label Text="{Binding Rev}" FontSize="Large" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="End"/>
+                                <Button Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" BindingContext="{Binding Source={x:Reference OpenOrder}, Path=BindingContext}" Command="{Binding EditCommand}"  CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" Text="Edit"></Button>
                             </Grid>
 
 

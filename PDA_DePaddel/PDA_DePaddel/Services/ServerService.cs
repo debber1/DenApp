@@ -260,6 +260,7 @@ namespace PDA_DePaddel.Services
                 if (json[json.Length - 1] == '|')
                 {
                     Variables.ProductOrder = JsonConvert.DeserializeObject<ObservableCollection<ProductOrder>>(json.Remove(json.Length - 1, 1));
+                    Variables.CalcOrderRev = Variables.ProductOrder;
                 }
                 else
                 {
@@ -311,6 +312,7 @@ namespace PDA_DePaddel.Services
                     Temp.Add(new ProductOrder()
                     {
                         ID = item.ID,
+                        Name = item.Name,
                         Price = item.Price,
                         Amount = 0,
                         Comment = item.Comment
@@ -322,6 +324,7 @@ namespace PDA_DePaddel.Services
                     Temp.Add(new ProductOrder()
                     {
                         ID = item.ID,
+                        Name = item.Name,
                         Price = item.Price,
                         Amount = TempAmount,
                         Comment = item.Comment
@@ -336,6 +339,7 @@ namespace PDA_DePaddel.Services
                 first.Add(new ProductOrder()
                 {
                     ID = item.ID,
+                    Name = item.Name,
                     Price = item.Price,
                     Amount = 0,
                     Comment = item.Comment
@@ -343,6 +347,7 @@ namespace PDA_DePaddel.Services
                 Temp.Add(new ProductOrder()
                 {
                     ID = item.ID,
+                    Name = item.Name,
                     Price = item.Price,
                     Amount = item.Amount,
                     Comment = item.Comment
