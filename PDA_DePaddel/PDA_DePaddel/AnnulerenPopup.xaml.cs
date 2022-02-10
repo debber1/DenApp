@@ -26,6 +26,7 @@ namespace PDA_DePaddel
             PopupNavigation.Instance.PopAsync(true);
             Variables.Operator = "";
             Variables.Name = "";
+            Variables.Rev = -1;
         }
 
         private void BtnNee_Clicked(object sender, EventArgs e)

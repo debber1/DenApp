@@ -20,8 +20,11 @@ namespace PDA_DePaddel.ViewModels
         public int OrderNumber { get; set; }
         public string LastName { get; set; }
         public string LastAmount { get; set; }
+        public bool RevisionMode = false;
         public ProductListVM()
         {
+            Variables.ProductOrder = null;
+            RevisionMode = false;
             Products = Services.ServerService.GetProduct();
             if(Products == null)
             {
@@ -30,7 +33,7 @@ namespace PDA_DePaddel.ViewModels
             TotalPrice = 0;
             IsBusy = false;
             Name = Variables.Name;
-            OrderNumber = Services.ServerService.GetOrderNumber();
+            
             if(OrderNumber == -1)
             {
                 MessagingCenter.Send(this, "ErrorProductList", "Er ging iets mis bij het ophalen van het bestellingnummer.");
@@ -38,7 +41,19 @@ namespace PDA_DePaddel.ViewModels
             }
             LastName = "Laatst gekozen item";
             LastAmount = "Hoeveelheid";
-            ProductOrders = new ObservableCollection<ProductOrder>();
+            if (Variables.CalcOrderRev != null)
+            {
+                ProductOrders = Variables.CalcOrderRev;
+                Variables.CalcOrderRev = null;
+                RevisionMode = true;
+                OrderNumber = Variables.OrderNumber;
+            }
+            else
+            {
+                Variables.Rev = -1;
+                ProductOrders = new ObservableCollection<ProductOrder>();
+                OrderNumber = Services.ServerService.GetOrderNumber();
+            }
 
             //Command voor de bestel knop
             OrderCommand = new Command(async () =>

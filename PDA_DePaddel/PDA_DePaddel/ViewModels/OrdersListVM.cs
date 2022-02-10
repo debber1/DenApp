@@ -116,6 +116,21 @@ namespace PDA_DePaddel.ViewModels
                     NotifyPropertyChanged(nameof(IsBusy));
 
                     OrderDetail = Services.ServerService.GetDetail(value.ID);
+                    if (Variables.OrderRev != null)
+                    {
+                        foreach(OrderDet element in OrderDetail)
+                        {
+                            element.DisplayAmount = element.Amount.ToString() + "=>" + Variables.OrderRev[OrderDetail.IndexOf(element)].Amount.ToString();
+                        }
+                        Variables.OrderRev = null;
+                    }
+                    else
+                    {
+                        foreach(OrderDet element in OrderDetail)
+                        {
+                            element.DisplayAmount = element.Amount.ToString();
+                        }
+                    }
                     Idtaped = value.ID;
                     Orders = Services.ServerService.GetOrders();
                     if (Orders == null)

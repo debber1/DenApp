@@ -40,40 +40,84 @@ namespace PDA_DePaddel
 
         private void BtnDoorgaan_Clicked(object sender, EventArgs e)
         {
-            try
-            {
-                Activity1.IsRunning = true;
-                string json = JsonConvert.SerializeObject(Variables.ProductOrder);
 
-                WebClient client = new WebClient();
-                Uri uri = new Uri(GlobalVariable.Base + GlobalVariable.UpLoadOrder);
-                NameValueCollection parameters = new NameValueCollection();
-                Variables.CurrentGuid = Guid.NewGuid().ToString();
+            if(Variables.Rev == -1)
+            {
+                try
+                {
+                    Activity1.IsRunning = true;
+                    string json = JsonConvert.SerializeObject(Variables.ProductOrder);
 
-                parameters.Add("json", json);
-                parameters.Add("operator", Variables.GuidUser);
-                parameters.Add("guid", Variables.CurrentGuid);
-                parameters.Add("bestellingnr", Variables.OrderNumber.ToString());
-                parameters.Add("ID_evenement", Variables.EventGuid);
-                Variables.CurrentGuid = null;
+                    WebClient client = new WebClient();
+                    Uri uri = new Uri(GlobalVariable.Base + GlobalVariable.UpLoadOrder);
+                    NameValueCollection parameters = new NameValueCollection();
+                    Variables.CurrentGuid = Guid.NewGuid().ToString();
 
-                client.UploadValuesCompleted += Client_UploadValuesCompleted;
-                client.UploadValuesAsync(uri, parameters);
+                    parameters.Add("json", json);
+                    parameters.Add("operator", Variables.GuidUser);
+                    parameters.Add("guid", Variables.CurrentGuid);
+                    parameters.Add("bestellingnr", Variables.OrderNumber.ToString());
+                    parameters.Add("ID_evenement", Variables.EventGuid);
+                    Variables.CurrentGuid = null;
+
+                    client.UploadValuesCompleted += Client_UploadValuesCompleted;
+                    client.UploadValuesAsync(uri, parameters);
+                }
+                catch (WebException ex)
+                {
+                    DisplayAlert("Fout", "Web: " + ex.Message, "oké");
+                    Activity1.IsRunning = false;
+                }
+                catch (Exception ex)
+                {
+                    DisplayAlert("Fout", "General: " + ex.Message, "oké");
+                    Activity1.IsRunning = false;
+                }
+                finally
+                {
+                    PopupNavigation.Instance.PopAsync(true);
+                }
             }
-            catch (WebException ex)
+            else
             {
-                DisplayAlert("Fout", "Web: " + ex.Message, "oké");
-                Activity1.IsRunning = false;
+                try
+                {
+                    Activity1.IsRunning = true;
+                    string json = JsonConvert.SerializeObject(Variables.ProductOrder);
+
+                    WebClient client = new WebClient();
+                    Uri uri = new Uri(GlobalVariable.Base + GlobalVariable.UploadRevision);
+                    NameValueCollection parameters = new NameValueCollection();
+                    Variables.CurrentGuid = Guid.NewGuid().ToString();
+                    
+                    
+                    parameters.Add("ID_HEAD", Variables.RevCurrentGuid);
+                    parameters.Add("guid", Variables.CurrentGuid);
+                    parameters.Add("json", json);
+                    parameters.Add("rev", (Variables.Rev+1).ToString());
+
+
+                    client.UploadValuesCompleted += Client_UploadValuesCompleted;
+                    client.UploadValuesAsync(uri, parameters);
+                }
+                catch (WebException ex)
+                {
+                    DisplayAlert("Fout", "Web: " + ex.Message, "oké");
+                    Activity1.IsRunning = false;
+                }
+                catch (Exception ex)
+                {
+                    DisplayAlert("Fout", "General: " + ex.Message, "oké");
+                    Activity1.IsRunning = false;
+                }
+                finally
+                {
+                    PopupNavigation.Instance.PopAsync(true);
+                }
             }
-            catch (Exception ex)
-            {
-                DisplayAlert("Fout", "General: " + ex.Message, "oké");
-                Activity1.IsRunning = false;
-            }
-            finally
-            {
-                PopupNavigation.Instance.PopAsync(true);
-            }         
+
+
+ 
         }
 
         private void Client_UploadValuesCompleted(object sender, UploadValuesCompletedEventArgs e)
@@ -92,6 +136,9 @@ namespace PDA_DePaddel
                     ((MainPage)App.Current.MainPage).Detail.Navigation.PopAsync(true);
                     PopupNavigation.Instance.PopAsync(true);
                     DisplayAlert("Succes", "Succesvol de bestelling door gegeven.", "Oké");
+                    Variables.CurrentGuid = null;
+                    Variables.RevCurrentGuid = null;
+                    Variables.Rev = -1;
                 }
             }
             catch (WebException ex)

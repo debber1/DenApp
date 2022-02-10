@@ -138,6 +138,29 @@ namespace PDA_DePaddel.Models
             set { sOrderNotDone = value; }
         }
 
-
+        private static ObservableCollection<OrderDet> sOrderRev;
+        public static ObservableCollection<OrderDet> OrderRev
+        {
+            get { return sOrderRev; }
+            set { sOrderRev = value; }
+        }
+        private static ObservableCollection<ProductOrder> sCalcOrderRev;
+        public static ObservableCollection<ProductOrder> CalcOrderRev
+        {
+            get { return sCalcOrderRev; }
+            set { sCalcOrderRev = value; }
+        }
+        private static int sRev = -1;
+        public static int Rev
+        {
+            get { return sRev; }
+            set { sRev = value; }
+        }
+        private static string sRevCurrentGuid;
+        public static string RevCurrentGuid
+        {
+            get { return sRevCurrentGuid; }
+            set { sRevCurrentGuid = value; }
+        }
     }
 }

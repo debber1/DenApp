@@ -58,7 +58,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding ID}" IsVisible="False"/>
                                 <Label Text="{Binding Name}" FontSize="Large" Grid.ColumnSpan="3" Grid.Row="0"/>
-                                <Label Text="{Binding Amount}" FontSize="Large" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="End"/>
+                                <Label Text="{Binding DisplayAmount}" FontSize="Large" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="End"/>
                                 <Label Text="{Binding Comment}" Grid.ColumnSpan="3" Grid.Row="1"/>
                                 <Label Text="{Binding Price}" Grid.Column="3" Grid.Row="1" HorizontalTextAlignment="End"/>
                             </Grid>

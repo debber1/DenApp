@@ -174,6 +174,7 @@
                                 <Label Text="{Binding OrderNumber}" FontSize="Large"/>
                                 <Label Text="{Binding Creation}" FontSize="Large" Grid.ColumnSpan="2" Grid.Column="1" HorizontalTextAlignment="End"/>
                                 <Label Text="{Binding Comment}" Grid.Row="1"/>
+                                <Label Text="{Binding Rev}" Grid.Row="1" Grid.Column="2" VerticalTextAlignment="End"/>
                             </Grid>
                         </ViewCell.View>
                     </ViewCell>

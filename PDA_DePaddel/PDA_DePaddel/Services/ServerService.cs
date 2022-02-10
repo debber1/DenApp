@@ -256,7 +256,21 @@ namespace PDA_DePaddel.Services
                 byte[] response = Client.UploadValues(url, parameters);
 
                 string json = Encoding.UTF8.GetString(response);
-                Variables.ProductOrder = JsonConvert.DeserializeObject<ObservableCollection<ProductOrder>>(json);
+
+                if (json[json.Length - 1] == '|')
+                {
+                    Variables.ProductOrder = JsonConvert.DeserializeObject<ObservableCollection<ProductOrder>>(json.Remove(json.Length - 1, 1));
+                    Variables.CalcOrderRev = Variables.ProductOrder;
+                }
+                else
+                {
+                    string[] subs = json.Split('|');
+                    //Making the two lists equal except for the amounts of eacht product.
+                    Variables.ProductOrder = MakeEqual2(JsonConvert.DeserializeObject<ObservableCollection<ProductOrder>>(subs[0]), JsonConvert.DeserializeObject<ObservableCollection<ProductOrder>>(subs[1]));
+                }
+
+
+
 
                 Variables.Renew3 = true;
                 decimal Totaalprijs = 0;
@@ -274,6 +288,73 @@ namespace PDA_DePaddel.Services
             {
                 Debug.WriteLine("Regular Ex: " + ex);
             }
+        }
+        public static ObservableCollection<ProductOrder> MakeEqual2(ObservableCollection<ProductOrder> first, ObservableCollection<ProductOrder> rev)
+        {
+            ObservableCollection<ProductOrder> Temp = new ObservableCollection<ProductOrder>();
+            bool found = false;
+            int TempAmount = 0;
+            int TempIndex = 0;
+            foreach (ProductOrder item in first)
+            {
+                foreach (ProductOrder element in rev)
+                {
+                    if (element.Name == item.Name)
+                    {
+                        found = true;
+                        TempIndex = rev.IndexOf(element);
+                        TempAmount = element.Amount;
+                        break;
+                    }
+                }
+                if (found != true)
+                {
+                    Temp.Add(new ProductOrder()
+                    {
+                        ID = item.ID,
+                        Name = item.Name,
+                        Price = item.Price,
+                        Amount = 0,
+                        Comment = item.Comment
+                    });
+                }
+                else
+                {
+                    found = false;
+                    Temp.Add(new ProductOrder()
+                    {
+                        ID = item.ID,
+                        Name = item.Name,
+                        Price = item.Price,
+                        Amount = TempAmount,
+                        Comment = item.Comment
+                    });
+                    TempAmount = 0;
+                    rev.RemoveAt(TempIndex);
+                    TempIndex = 0;
+                }
+            }
+            foreach (ProductOrder item in rev)
+            {
+                first.Add(new ProductOrder()
+                {
+                    ID = item.ID,
+                    Name = item.Name,
+                    Price = item.Price,
+                    Amount = 0,
+                    Comment = item.Comment
+                });
+                Temp.Add(new ProductOrder()
+                {
+                    ID = item.ID,
+                    Name = item.Name,
+                    Price = item.Price,
+                    Amount = item.Amount,
+                    Comment = item.Comment
+                });
+            }
+            Variables.CalcOrderRev = Temp;
+            return first;
         }
         public static string LoadNewOrder()
         {
@@ -353,7 +434,17 @@ namespace PDA_DePaddel.Services
                 parameters.Add("ID", Idtaped.ToString());
                 byte[] json = Client.UploadValues(url, parameters);
                 string json2 = Encoding.UTF8.GetString(json);
-                return JsonConvert.DeserializeObject<ObservableCollection<OrderDet>>(json2);
+                if (json2[json2.Length - 1] == '|')
+                {
+                    return JsonConvert.DeserializeObject<ObservableCollection<OrderDet>>(json2.Remove(json2.Length - 1, 1));
+                }
+                else
+                {
+                    string[] subs = json2.Split('|');
+                    //Making the two lists equal except for the amounts of eacht product.
+                    return MakeEqual(JsonConvert.DeserializeObject<ObservableCollection<OrderDet>>(subs[0]), JsonConvert.DeserializeObject<ObservableCollection<OrderDet>>(subs[1]));
+                }
+                
             }
             catch (WebException ex)
             {
@@ -364,6 +455,69 @@ namespace PDA_DePaddel.Services
                 Debug.WriteLine("Regular Ex: " + ex);
             }
             return null;
+        }
+        public static ObservableCollection<OrderDet> MakeEqual(ObservableCollection<OrderDet> first, ObservableCollection<OrderDet> rev)
+        {
+            ObservableCollection<OrderDet> Temp = new ObservableCollection<OrderDet>();
+            bool found = false;
+            int TempAmount = 0;
+            int TempIndex = 0;
+            foreach (OrderDet item in first)
+            {
+                foreach(OrderDet element in rev)
+                {
+                    if(element.Product == item.Product)
+                    {
+                        found = true;
+                        TempIndex = rev.IndexOf(element);
+                        TempAmount = element.Amount;
+                        break;
+                    }
+                }
+                if (found != true)
+                {
+                    Temp.Add(new OrderDet()
+                    {
+                        ID = item.ID,
+                        ID_Order_Head = item.ID_Order_Head,
+                        Product = item.Product,
+                        Amount = 0
+                    });
+                }
+                else
+                {
+                    found = false;
+                    Temp.Add(new OrderDet()
+                    {
+                        ID = item.ID,
+                        ID_Order_Head = item.ID_Order_Head,
+                        Product = item.Product,
+                        Amount = TempAmount
+                    });
+                    TempAmount = 0;
+                    rev.RemoveAt(TempIndex);
+                    TempIndex = 0;
+                }
+            }
+            foreach (OrderDet item in rev)
+            {
+                first.Add(new OrderDet()
+                {
+                    ID = item.ID,
+                    ID_Order_Head = item.ID_Order_Head,
+                    Product = item.Product,
+                    Amount = 0
+                });
+                Temp.Add(new OrderDet()
+                {
+                    ID = item.ID,
+                    ID_Order_Head = item.ID_Order_Head,
+                    Product = item.Product,
+                    Amount = item.Amount
+                });
+            }
+            Variables.OrderRev = Temp;
+            return first;
         }
         public static List<HomeScreen> GetOperator(String Operator, String Event )
         {
